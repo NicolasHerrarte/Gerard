@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit.components.v1 import html
 
 st.set_page_config(page_title="Pagina Principal", page_icon="J187DFS.JPG", layout="wide")
 col1, col2 = st.columns(2)
@@ -6,7 +7,6 @@ col1, col2 = st.columns(2)
 centered_amount=5
 #Style
 css = ""
-
 
 def padding(amount):
     for i in range(amount):
@@ -45,11 +45,7 @@ with st.container(key="black-centered-1"):
     st.header("Crea Recuerdos Inolvidables".upper())
     st.write("Planifica tu proximo evento social con EVENT PLANNER en Guatemala. Ofrecemos servicios personalizados para garantizar que")
     st.write("tu celebracion sea inolvidable y perfecta de principio a fin")
-    padding(1)
-    pp = st.button("Planifica mi evento")
-    if pp:
-        st.switch_page("pages/Boda.py")
-    padding(6)
+    padding(5)
 
 col1_1, col1_2 = st.columns(2, gap="large")
 with col1_1:

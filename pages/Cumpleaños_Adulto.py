@@ -1,15 +1,33 @@
 import streamlit as st
 from Pagina_Principal import padding
-
+import datetime
 st.set_page_config(page_title="Cumpleaños Adulto", page_icon="J187DFS.JPG", layout="wide")
 
 st.title("Cumpleaños Adulto".upper())
+
+place_dict = {
+    "Rooftop / bar privado": 15000,
+    "Restaurante alquilado": 20000
+}
+
+estilo_price = {
+    "Temático": 10000,
+    "Elegante / coctel": 12000
+}
+
+service_dict = {
+    "DJ": 6000,
+    "Coctelería/bar": 2100,
+    "Catering gourmet": 9900,
+    "Fotografía básica": 3800
+}
 
 with st.form("Formulario"):
     col1_1, col1_2, col1_3 = st.columns(3, gap="large")
     with col1_1:
         d = st.date_input("Fecha del evento")
-        ds = st.selectbox("Hora del dia", ["Dia", "Noche"])
+        ds = st.time_input("Hora del evento", datetime.time(12, 00))
+        ds = str(ds)[0:-3]
 
     with col1_2:
         personas = st.selectbox(
@@ -19,7 +37,7 @@ with st.form("Formulario"):
     with col1_3:
         lugar = st.selectbox(
             "Lugares",
-            ["Rooftop", "Restaurantes", "Bares o eventos cerrados", "Casa o Area social de su gusto"],
+            list(place_dict.keys()),
         )
 
     padding(1)
@@ -31,14 +49,13 @@ with st.form("Formulario"):
         st.write("Estilo o tematica")
         tema = st.selectbox(
             "Tema",
-            ["Años 80", "Blanca", "Elegante", "Karaoke Night", "Personalizada"]
+            list(estilo_price.keys())
         )
 
 
     with col2_2:
         st.write("Servicios adicionales")
-        servicios = ["DJ o musica en vivo", "Barra Libre o cocteleria", "Catering Gourmet o casual",
-                     "Fotogrado, Pastel Personalizado", "Invitaciones", "Inmobiliario"]
+        servicios = list(service_dict.keys())
         opciones = [st.checkbox(x) for x in servicios]
         zipped = zip(servicios, opciones)
 
@@ -46,7 +63,15 @@ with st.form("Formulario"):
         direccion = st.text_input("Direccion personalizada")
 
     submitted = st.form_submit_button("Cotizar")
+
     if submitted:
+        price = 0
+        price += place_dict[lugar]
+        price += estilo_price[tema]
+        for x, _ in zipped:
+            price += service_dict[x]
+        st.session_state.price = price
+
         st.session_state.name = "Cumpleaños Adulto"
         st.session_state.results = {
             "Fecha": {

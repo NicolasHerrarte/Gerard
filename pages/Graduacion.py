@@ -1,15 +1,32 @@
 import streamlit as st
 from Pagina_Principal import padding
-
+import datetime
 st.set_page_config(page_title="Graduacion", page_icon="J187DFS.JPG", layout="wide")
 
 st.title("Graduacion".upper())
+
+place_dict = {
+    "Salón de hotel": 20000,
+    "Rooftop / salón moderno": 25000
+}
+
+estilo_price = {
+    "Elegante": 10000,
+    "Temático (Hollywood/Casino)": 15000
+}
+
+service_dict = {
+    "DJ + Photobooth": 5000,
+    "Catering": 16000,
+    "Pastel personalizado": 5000
+}
 
 with st.form("Formulario"):
     col1_1, col1_2, col1_3 = st.columns(3, gap="large")
     with col1_1:
         d = st.date_input("Fecha del evento")
-        ds = st.selectbox("Hora del dia", ["Dia", "Noche"])
+        ds = st.time_input("Hora del evento", datetime.time(12, 00))
+        ds = str(ds)[0:-3]
 
     with col1_2:
         personas = st.selectbox(
@@ -19,7 +36,7 @@ with st.form("Formulario"):
     with col1_3:
         lugar = st.selectbox(
             "Lugares",
-            ["Hoteles o Salones", "Fincas Privadas", "Jardines", "Eventos en casa"],
+            list(place_dict.keys()),
         )
 
     padding(1)
@@ -35,13 +52,13 @@ with st.form("Formulario"):
         )
         tema = st.selectbox(
             "Tema",
-            ["Formal Elegante", "Academica", "Estilo Launge", "Vintage", "Personalizada"]
+            list(estilo_price.keys())
         )
 
 
     with col2_2:
         st.write("Servicios adicionales")
-        servicios = ["DJ/Banda", "Fotografo Profesional", "Catering o Cena Formal", "Pantalla con proyector", "Mesa de dulces o postres", "Entrada personalizada","Pista de Baile"]
+        servicios = list(service_dict.keys())
         opciones = [st.checkbox(x) for x in servicios]
         zipped = zip(servicios, opciones)
 
@@ -50,6 +67,13 @@ with st.form("Formulario"):
 
     submitted = st.form_submit_button("Cotizar")
     if submitted:
+        price = 0
+        price += place_dict[lugar]
+        price += estilo_price[tema]
+        for x, _ in zipped:
+            price += service_dict[x]
+        st.session_state.price = price
+
         st.session_state.name = "Graduacion"
         st.session_state.results = {
             "Fecha":{

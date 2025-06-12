@@ -1,10 +1,14 @@
 import streamlit as st
 from Pagina_Principal import add_class, padding
+from fpdf import FPDF
+import os
+
 st.set_page_config(page_title="Resultados", page_icon="J187DFS.JPG", layout="wide")
 
 @st.dialog("Se realizo su pedido exitosamente")
 def exito():
-    back = st.button("Ver mas!")
+    st.write("El total de la cotizacion seria de {price:.2f}Q".format(price=st.session_state.price))
+    back = st.button("Mandar por Correo")
     if back:
         st.switch_page("Pagina_Principal.py")
 #Style

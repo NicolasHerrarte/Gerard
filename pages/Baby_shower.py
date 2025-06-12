@@ -1,14 +1,32 @@
 import streamlit as st
 from Pagina_Principal import padding
+import datetime
 st.set_page_config(page_title="Baby Shower", page_icon="J187DFS.JPG", layout="wide")
 
 st.title("Baby Shower".upper())
+
+place_dict = {
+    "Sala privada / jardín chico": 4000,
+    "Salón de eventos pequeño": 6000
+}
+
+estilo_price = {
+    "Temático": 4000,
+    "Minimalista": 3000
+}
+
+service_dict = {
+    "Catering": 1200,
+    "Juegos/souvenirs": 3000,
+    "Decoración": 3000
+}
 
 with st.form("Formulario"):
     col1_1, col1_2, col1_3 = st.columns(3, gap="large")
     with col1_1:
         d = st.date_input("Fecha del evento")
-        ds = st.selectbox("Hora del dia", ["Brunch", "Comida", "Fiesta de Noche"])
+        ds = st.time_input("Hora del evento", datetime.time(12, 00))
+        ds = str(ds)[0:-3]
 
     with col1_2:
         personas = st.selectbox(
@@ -18,7 +36,7 @@ with st.form("Formulario"):
     with col1_3:
         lugar = st.selectbox(
             "Lugares",
-            ["Westlin Camino Real", "Tikal Futura", "El Pulte", "Casa o Area social de su gusto"],
+            list(place_dict.keys()),
         )
 
     padding(1)
@@ -34,13 +52,12 @@ with st.form("Formulario"):
         )
         tema = st.selectbox(
             "Tema",
-            ["Bosque", "Animales", "Celestial", "Vintage", "Minimalista"],
+            list(estilo_price.keys()),
         )
 
     with col2_2:
         st.write("Servicios adicionales")
-        servicios = ["Juegos Tematicos Guiados", "Mesa de dulces", "Souvenirs Personalizados",
-                     "Catering liviano", "Invitaciones Digitales"]
+        servicios = list(service_dict.keys())
         opciones = [st.checkbox(x) for x in servicios]
         zipped = zip(servicios, opciones)
 
@@ -49,6 +66,13 @@ with st.form("Formulario"):
 
     submitted = st.form_submit_button("Cotizar")
     if submitted:
+        price = 0
+        price += place_dict[lugar]
+        price += estilo_price[tema]
+        for x, _ in zipped:
+            price += service_dict[x]
+        st.session_state.price = price
+
         st.session_state.name = "Baby Shower"
         st.session_state.results = {
             "Fecha": {
