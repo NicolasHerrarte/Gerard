@@ -16,10 +16,10 @@ padding: 20px;""", 10, css)
 
 st.html(f"<style>{css}</style>")
 
-st.markdown("---")
 
 if 'results' in st.session_state:
     st.title(f"Resultados de {st.session_state.name}".upper())
+    st.markdown("---")
     res = st.session_state.results
     for i, k in enumerate(res.keys()):
         if(i % 2 == 0):
@@ -51,4 +51,5 @@ if 'results' in st.session_state:
         exito()
 else:
     st.title("Resultados".upper())
+    st.markdown("---")
     st.warning("Todavia no se ha hecho ninguna cotizacion")
