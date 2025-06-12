@@ -1,6 +1,5 @@
 import streamlit as st
 from Pagina_Principal import add_class, padding
-from fpdf import FPDF
 import os
 
 st.set_page_config(page_title="Resultados", page_icon="J187DFS.JPG", layout="wide")
