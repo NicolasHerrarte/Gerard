@@ -70,8 +70,9 @@ with st.form("Formulario"):
         price = 0
         price += place_dict[lugar]
         price += estilo_price[tema]
-        for x, _ in zipped:
-            price += service_dict[x]
+        for x, v in zipped:
+            if v:
+                price += service_dict[x]
         st.session_state.price = price
 
         st.session_state.name = "Graduacion"
