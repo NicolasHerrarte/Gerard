@@ -48,7 +48,7 @@ with st.container(key="black-centered-1"):
     padding(1)
     pp = st.button("Planifica mi evento")
     if pp:
-        st.switch_page("Pagina_Principal.py")
+        st.switch_page("pages/Boda.py")
     padding(6)
 
 col1_1, col1_2 = st.columns(2, gap="large")
