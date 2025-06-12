@@ -1,6 +1,6 @@
 import streamlit as st
 from Pagina_Principal import padding
-st.set_page_config(page_title="a", page_icon="J187DFS.JPG", layout="wide")
+st.set_page_config(page_title="Baby Shower", page_icon="J187DFS.JPG", layout="wide")
 
 st.title("Baby Shower".upper())
 
