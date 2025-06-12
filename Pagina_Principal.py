@@ -23,7 +23,7 @@ def add_class(name, body, amount, css):
 
 css = add_class("black-centered",
                 """background-color: #ede0d4;
-text-align: center""", 2, css)
+text-align: center""", 10, css)
 css = add_class("centered",
                 """text-align: center""", 6, css)
 

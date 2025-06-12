@@ -39,15 +39,28 @@ with st.form("Formulario"):
 
     with col2_2:
         st.write("Servicios adicionales")
-        op1 = st.checkbox("Juegos tematicos guiados")
-        op2 = st.checkbox("Mesa de dulces")
-        op3 = st.checkbox("Souvenirs personalizados")
-        op4 = st.checkbox("Catering liviano")
-        op5 = st.checkbox("Invitaciones digitales")
+        servicios = ["Juegos Tematicos Guiados", "Mesa de dulces", "Souvenirs Personalizados",
+                     "Catering liviano", "Invitaciones Digitales"]
+        opciones = [st.checkbox(x) for x in servicios]
+        zipped = zip(servicios, opciones)
 
     with col3_3:
         direccion = st.text_input("Direccion personalizada")
 
     submitted = st.form_submit_button("Cotizar")
     if submitted:
+        st.session_state.name = "Baby Shower"
+        st.session_state.results = {
+            "Fecha": {
+                "Dia/Mes/Año": d,
+                "Tiempo del Dia": ds
+            },
+            "Lugar": {
+                "Lugar Predeterminado": lugar,
+                "Direccion personalizada": direccion,
+            },
+            "Estilo": tema,
+            "Personas": personas,
+            "Servicios Adicionales": zipped
+        }
         st.switch_page("pages/Resultados.py")

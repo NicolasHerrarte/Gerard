@@ -12,8 +12,10 @@ with st.form("Formulario"):
         ds = st.selectbox("Hora del dia", ["Dia", "Noche"])
 
     with col1_2:
-        niños = st.number_input("Cantidad niños")
-        adultos = st.number_input("Cantidad adultos")
+        personas = st.selectbox(
+            "Cantidad de personas",
+            ["20-50", "50-100", "100-200", "Mas de 200"],
+        )
     with col1_3:
         lugar = st.selectbox(
             "Lugares",
@@ -39,17 +41,30 @@ with st.form("Formulario"):
 
     with col2_2:
         st.write("Servicios adicionales")
-        op1 = st.checkbox("DJ/Banda")
-        op2 = st.checkbox("Fotografo Profesional")
-        op3 = st.checkbox("Catering o Cena Formal")
-        op4 = st.checkbox("Pantalla con proyector")
-        op5 = st.checkbox("Mesa de dulces o postres")
-        op6 = st.checkbox("Entrada personalizada")
-        op7 = st.checkbox("Pista de Baile")
+        servicios = ["DJ/Banda", "Fotografo Profesional", "Catering o Cena Formal", "Pantalla con proyector", "Mesa de dulces o postres", "Entrada personalizada","Pista de Baile"]
+        opciones = [st.checkbox(x) for x in servicios]
+        zipped = zip(servicios, opciones)
 
     with col3_3:
         direccion = st.text_input("Direccion personalizada")
 
     submitted = st.form_submit_button("Cotizar")
     if submitted:
+        st.session_state.name = "Graduacion"
+        st.session_state.results = {
+            "Fecha":{
+                "Dia/Mes/Año": d,
+                "Tiempo del Dia": ds
+            },
+            "Lugar":{
+                "Lugar Predeterminado": lugar,
+                "Direccion personalizada": direccion,
+            },
+            "Estilo":{
+                "Tipo": tipo,
+                "Tema": tema
+            },
+            "Personas": personas,
+            "Servicios Adicionales": zipped
+        }
         st.switch_page("pages/Resultados.py")

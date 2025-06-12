@@ -36,12 +36,22 @@ with st.form("Formulario"):
 
     with col2_2:
         st.write("Servicios adicionales")
-        op1 = st.checkbox("Catering Personalizado")
-        op2 = st.checkbox("Dj/Musica en vivo")
-        op3 = st.checkbox("Invitaciones digitales")
-        op4 = st.checkbox("Fotografia profesional")
-        op5 = st.checkbox("Mesa de regalos y detalles")
+        servicios = ["Catering Personalizado", "Dj/Musica en vivo", "Invitaciones Digitales",
+                     "Fotografia Profesional", "Mesa de Regales y Detalles"]
+        opciones = [st.checkbox(x) for x in servicios]
+        zipped = zip(servicios, opciones)
 
     submitted = st.form_submit_button("Cotizar")
     if submitted:
+        st.session_state.name = "Boda"
+        st.session_state.results = {
+            "Fecha": {
+                "Dia/Mes/Año": d,
+                "Tiempo del Dia": ds
+            },
+            "Lugar": lugar,
+            "Tematica": tema,
+            "Personas": personas,
+            "Servicios Adicionales": zipped
+        }
         st.switch_page("pages/Resultados.py")
