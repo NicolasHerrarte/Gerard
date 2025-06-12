@@ -46,7 +46,9 @@ with st.container(key="black-centered-1"):
     st.write("Planifica tu proximo evento social con EVENT PLANNER en Guatemala. Ofrecemos servicios personalizados para garantizar que")
     st.write("tu celebracion sea inolvidable y perfecta de principio a fin")
     padding(1)
-    st.button("Planifica mi evento")
+    pp = st.button("Planifica mi evento")
+    if pp:
+        st.switch_page("Pagina_Principal.py")
     padding(6)
 
 col1_1, col1_2 = st.columns(2, gap="large")
